@@ -1,0 +1,95 @@
+@media screen and (min-width: 340px) and (max-width: 568px)
+{
+     .wrap{width:100%;}
+     .wrap{margin:0;}
+     .wrap{padding:0;}
+     .wrap input[type=tel]{width: 100%;}
+     .wrap input[type=tel]{font-size: 16px;}
+     .wrap input[type=text]{width: 100%;}
+     .wrap input[type=text]{font-size: 16px;}
+/*     .wrap input[type=submit]{margin: 5px 0 0 0;} */
+     .wrap{font-size:19px;}
+
+/*     .linha label{font-size: 16px;} */
+	 .col{font-size: 16px;}
+	 .col1{font-size: 9px;}
+}
+
+body{
+	background-color: #dddddf;
+}
+
+h3, h4{
+	text-align: center;
+	margin: 7px 0 5px 0;
+}
+
+.wrap{
+	width: 330px;
+	height: 100%;
+	margin: 0 auto;
+	padding: 0;
+}
+
+.wrap input[type=tel]{
+	width: 98%;
+	font-size: 16px;
+}
+
+.wrap input[type=text]{
+	width: 98%;
+	font-size: 16px;
+}
+
+.wrap input[type=submit]{
+	width: 103px;
+	font-size: 15px;
+	font-weight: bold;
+	margin: 5px 0 0 0;
+}
+
+/*.wrap input[type=date]{
+	width: 48%;
+	margin: auto;
+} */
+
+#dtBase{
+	width: 47%;
+}
+#dtVenc{
+	width: 46%;
+}
+
+.linha{
+	width: 330px;
+}
+
+.col{
+	float: left;
+}
+
+
+.col1{
+	width: 5%;
+	font-size: 9px;
+	color: blue;
+}
+.col2{
+	width: 30%;
+}
+.col3{
+	width: 17%;
+}
+.col4{
+	width: 28%;
+}
+.col5{
+	width: 20%;
+}
+.cRed{
+	color: red;
+}
+/*.tot{
+	font-weight: bold;
+	margin: 1px 0 1px 0;
+} */
