@@ -1,74 +1,676 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Converter uma Tabela para PDF usando JavaScript</title>
-    <style>
-        table
-        {
-            width: 300px;
-            font: 20px Calibri;
-        }
-        table, th, td 
-        {
-            border: solid 1px #DDD;
-            border-collapse: collapse;
-            padding: 2px 3px;
-            text-align: center;
-        }
-    </style>
+	<title>Juros</title>
+	<meta charset="utf-8">
+	<!--<link rel="stylesheet" type="text/css" href="hullmano.github.io/css/style.css">-->
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body>
-    <div id="tabela">
-        <table> 
-            <tr>
-                <th>Nome</th>
-                <th>Idade</th>
-                <th>Cargo</th>
-            </tr>
-            <tr>
-                <td>Macoratti</td>
-                <td>55</td>
-                <td>Programador</td>
-            </tr>
-            <tr>
-                <td>Jefferson</td>
-                <td>26</td>
-                <td>Engenheiro</td>
-            </tr>
-            <tr>
-                <td>Janice</td>
-                <td>24</td>
-                <td>Web Designer</td>
-            </tr>
-        </table>
-    </div>
-    <p>
-        <input type="button" value="Criar PDF" id="btnImprimir" onclick="CriaPDF()" />
-    </p>
+<body onload="dateToday()">
+	<div class="wrap">
+		<h3>Auto - Relevo Confeccões</h3>
+		<h4>Cnpj: 03.950.387/0001-35</h4>
+		<div class="linha">
+			<label for="valChq">Informe o Valor do Cheque:</label>
+			<input type="tel" id="valChq" placeholder="Valor do Cheque!" onblur="formatMoeda(this)" required="required" maxlength="15" pattern="([0-9]{1,3}\.)?[0-9]{1,3},[0-9]{2}$" tabindex="-1"> <br>
+			<label>Informe a Data Base e o Vencimento:</label> <br>
+			<input type="date" id="dtBase"></input>
+			<input type="date" id="dtVenc"></input> <br>
+			<!-- <input type="tel" id="valPrazo" placeholder="Prazo do Cheque. Somente Números" required="required" maxlength="15" pattern="([0-9]{1,3}\.)?[0-9]{1,3},[0-9]{2}$" onblur="checkNumber(this.value)"> <br>	 -->
+			<label>Informe a Taxa (%):</label>     <!--Para add espaços: &nbsp; &ensp; &emsp-->
+			<input type="tel" id="valTx" placeholder="Valor da Taxa (%)" onblur="formatMoeda(this)" required="required" maxlength="5" pattern="([0-9]{1,3}\.)?[0-9]{1,3},[0-9]{2}$"> <br>	
+			<label>Informe o Nome:</label>     <!--Para add espaços: &nbsp; &ensp; &emsp-->
+			<input type="text" id="valName" placeholder="Nome!" maxlength="10"> <br>					
+			<input type="submit" value="Calcular" onclick="calcular()"></input>
+			<input type="submit" value="Limpar" onclick="limpar()"></input>
+			<input type="submit" value="Imprimir" onClick="window.print()"></input> <br>
+		</div>
+
+		<div class="linha"  id="printing">
+			<!--Cabeçalhos-->
+			<label class="lblTitVals col col1">.</label>
+			<label class="lblTitVals col col2">Valor Bruto</label>
+			<label class="lblTitVals col col3">Prazo </label>
+			<label class="lblTitVals col col4">Valor Juros</label>
+			<label class="lblTitVals col col5">V.Líquido</label> <br>
+			<!--1º Linha-->
+			<label class="col col1">01</label>
+			<label class="col col2" id="valBruto1">.</label>
+			<label class="col col3" id="valPrazo1">.</label>
+			<label class="col col4" id="valJuros1">.</label>
+			<label class="col col5" id="valLiqui1">.</label>
+			<!--2º Linha-->
+			<label class="col col1">02</label>
+			<label class="col col2" id="valBruto2">.</label>
+			<label class="col col3" id="valPrazo2">.</label>
+			<label class="col col4" id="valJuros2">.</label>
+			<label class="col col5" id="valLiqui2">.</label>
+			<!--3º Linha-->
+			<label class="col col1">03</label>
+			<label class="col col2" id="valBruto3">.</label>
+			<label class="col col3" id="valPrazo3">.</label>
+			<label class="col col4" id="valJuros3">.</label>
+			<label class="col col5" id="valLiqui3">.</label>
+			<!--4º Linha-->
+			<label class="col col1">04</label>
+			<label class="col col2" id="valBruto4">.</label>
+			<label class="col col3" id="valPrazo4">.</label>
+			<label class="col col4" id="valJuros4">.</label>
+			<label class="col col5" id="valLiqui4">.</label>
+			<!--5º Linha-->
+			<label class="col col1">05</label>
+			<label class="col col2" id="valBruto5">.</label>
+			<label class="col col3" id="valPrazo5">.</label>
+			<label class="col col4" id="valJuros5">.</label>
+			<label class="col col5" id="valLiqui5">.</label>
+			<!--6º Linha-->
+			<label class="col col1">06</label>
+			<label class="col col2" id="valBruto6">.</label>
+			<label class="col col3" id="valPrazo6">.</label>
+			<label class="col col4" id="valJuros6">.</label>
+			<label class="col col5" id="valLiqui6">.</label>
+			<!--7º Linha-->
+			<label class="col col1">07</label>
+			<label class="col col2" id="valBruto7">.</label>
+			<label class="col col3" id="valPrazo7">.</label>
+			<label class="col col4" id="valJuros7">.</label>
+			<label class="col col5" id="valLiqui7">.</label>
+			<!--8º Linha-->
+			<label class="col col1">08</label>
+			<label class="col col2" id="valBruto8">.</label>
+			<label class="col col3" id="valPrazo8">.</label>
+			<label class="col col4" id="valJuros8">.</label>
+			<label class="col col5" id="valLiqui8">.</label>
+			<!--9º Linha-->
+			<label class="col col1">09</label>
+			<label class="col col2" id="valBruto9">.</label>
+			<label class="col col3" id="valPrazo9">.</label>
+			<label class="col col4" id="valJuros9">.</label>
+			<label class="col col5" id="valLiqui9">.</label>
+			<!--10º Linha-->
+			<label class="col col1">10</label>
+			<label class="col col2" id="valBruto10">.</label>
+			<label class="col col3" id="valPrazo10">.</label>
+			<label class="col col4" id="valJuros10">.</label>
+			<label class="col col5" id="valLiqui10">.</label>
+			<!--11º Linha-->
+			<label class="col col1">11</label>
+			<label class="col col2" id="valBruto11">.</label>
+			<label class="col col3" id="valPrazo11">.</label>
+			<label class="col col4" id="valJuros11">.</label>
+			<label class="col col5" id="valLiqui11">.</label>			
+			<!--12º Linha-->
+			<label class="col col1">12</label>
+			<label class="col col2" id="valBruto12">.</label>
+			<label class="col col3" id="valPrazo12">.</label>
+			<label class="col col4" id="valJuros12">.</label>
+			<label class="col col5" id="valLiqui12">.</label>
+			<!--13º Linha-->
+			<label class="col col1">13</label>
+			<label class="col col2" id="valBruto13">.</label>
+			<label class="col col3" id="valPrazo13">.</label>
+			<label class="col col4" id="valJuros13">.</label>
+			<label class="col col5" id="valLiqui13">.</label>
+			<!--14º Linha-->
+			<label class="col col1">14</label>
+			<label class="col col2" id="valBruto14">.</label>
+			<label class="col col3" id="valPrazo14">.</label>
+			<label class="col col4" id="valJuros14">.</label>
+			<label class="col col5" id="valLiqui14">.</label>
+			<!--15º Linha-->
+			<label class="col col1">15</label>
+			<label class="col col2" id="valBruto15">.</label>
+			<label class="col col3" id="valPrazo15">.</label>
+			<label class="col col4" id="valJuros15">.</label>
+			<label class="col col5" id="valLiqui15">.</label>			
+			<!--16º Linha-->
+			<label class="col col1">16</label>
+			<label class="col col2" id="valBruto16">.</label>
+			<label class="col col3" id="valPrazo16">.</label>
+			<label class="col col4" id="valJuros16">.</label>
+			<label class="col col5" id="valLiqui16">.</label>
+			<!--17º Linha-->
+			<label class="col col1">17</label>
+			<label class="col col2" id="valBruto17">.</label>
+			<label class="col col3" id="valPrazo17">.</label>
+			<label class="col col4" id="valJuros17">.</label>
+			<label class="col col5" id="valLiqui17">.</label>
+			<!--18º Linha-->
+			<label class="col col1">18</label>
+			<label class="col col2" id="valBruto18">.</label>
+			<label class="col col3" id="valPrazo18">.</label>
+			<label class="col col4" id="valJuros18">.</label>
+			<label class="col col5" id="valLiqui18">.</label>
+			<!--19º Linha-->
+			<label class="col col1">19</label>
+			<label class="col col2" id="valBruto19">.</label>
+			<label class="col col3" id="valPrazo19">.</label>
+			<label class="col col4" id="valJuros19">.</label>
+			<label class="col col5" id="valLiqui19">.</label>
+			<!--20º Linha-->
+			<label class="col col1">20</label>
+			<label class="col col2" id="valBruto20">.</label>
+			<label class="col col3" id="valPrazo20">.</label>
+			<label class="col col4" id="valJuros20">.</label>
+			<label class="col col5" id="valLiqui20">.</label>
+			<!--21º Linha-->
+			<label class="col col1">21</label>
+			<label class="col col2" id="valBruto21">.</label>
+			<label class="col col3" id="valPrazo21">.</label>
+			<label class="col col4" id="valJuros21">.</label>
+			<label class="col col5" id="valLiqui21">.</label>
+			<!--22º Linha-->
+			<label class="col col1">22</label>
+			<label class="col col2" id="valBruto22">.</label>
+			<label class="col col3" id="valPrazo22">.</label>
+			<label class="col col4" id="valJuros22">.</label>
+			<label class="col col5" id="valLiqui22">.</label>
+			<!--23º Linha-->
+			<label class="col col1">23</label>
+			<label class="col col2" id="valBruto23">.</label>
+			<label class="col col3" id="valPrazo23">.</label>
+			<label class="col col4" id="valJuros23">.</label>
+			<label class="col col5" id="valLiqui23">.</label>
+			<!--24º Linha-->
+			<label class="col col1">24</label>
+			<label class="col col2" id="valBruto24">.</label>
+			<label class="col col3" id="valPrazo24">.</label>
+			<label class="col col4" id="valJuros24">.</label>
+			<label class="col col5" id="valLiqui24">.</label>
+			<!--25º Linha-->
+			<label class="col col1">25</label>
+			<label class="col col2" id="valBruto25">.</label>
+			<label class="col col3" id="valPrazo25">.</label>
+			<label class="col col4" id="valJuros25">.</label>
+			<label class="col col5" id="valLiqui25">.</label>
+
+			<!--Total-->
+			<label class="lblTitVals col col1">.</label>
+			<label class="col col2 cRed tot">T.Bruto</label>
+			<label class="col col3 cRed tot">P.Méd</label>
+			<label class="col col4 cRed tot">T.Juros</label>
+			<label class="col col5 cRed tot">T.Líquido</label>
+
+			<label class="lblTitVals col col1">.</label>
+			<label class="col col2 tot" id="totBruto">.</label>
+			<label class="col col3 tot" id="totPrazo">.</label>
+			<label class="col col4 tot" id="totJuros">.</label>
+			<label class="col col5 tot" id="totLiqui">.</label>
+		</div>
+	</div>
 </body>
-<script>
-    function CriaPDF() {
-        var minhaTabela = document.getElementById('tabela').innerHTML;
 
-        var style = "<style>";
-        style = style + "table {width: 100%;font: 20px Calibri;}";
-        style = style + "table, th, td {border: solid 1px #DDD; border-collapse: collapse;";
-        style = style + "padding: 2px 3px;text-align: center;}";
-        style = style + "</style>";
+<script type="text/javascript">
+	function formatMoeda(btn){                  //Formata o valor para Moeda.
+		if (!btn.value){						//Verifica se value está vazio.
+		} else {
+			var valor = btn.value.replace(',','.'); //o parseFloat só considera decimal com ponto e nao com virgula
+			var novoValor = parseFloat(valor).toFixed(2);
+			btn.value = novoValor; 
+		}	
+	}
 
-        // CRIA UM OBJETO WINDOW
-        var win = window.open('', '', 'height=700,width=700');
+	function calcular(){
+		var valChq   = document.getElementById('valChq').value;
+		//var valPrazo = document.getElementById('valPrazo').value;		
+		var valPrazo = difDates();
+		var valTx    = document.getElementById('valTx').value;
+		var valJuros = ((parseFloat(valChq) * parseFloat(valTx/100)) /30) * parseFloat(valPrazo);
+		var liquid   = (parseFloat(valChq) - ((parseFloat(valChq) * parseFloat(valTx/100)) /30) * parseFloat(valPrazo));
+		//Imprime os valores nos labels
+		if(document.getElementById('valBruto1').innerHTML == '.'){
+			document.getElementById('valBruto1').innerHTML = valChq;
+			document.getElementById('valPrazo1').innerHTML = valPrazo;
+			document.getElementById('valJuros1').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui1').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = document.getElementById('valBruto1').innerHTML;
+			document.getElementById('totPrazo').innerHTML = document.getElementById('valPrazo1').innerHTML;
+			document.getElementById('totJuros').innerHTML = document.getElementById('valJuros1').innerHTML;
+			document.getElementById('totLiqui').innerHTML = document.getElementById('valLiqui1').innerHTML;
 
-        win.document.write('<html><head>');
-        win.document.write('<title>Empregados</title>');   // <title> CABEÇALHO DO PDF.
-        win.document.write(style);                       // INCLUI UM ESTILO NA TAB HEAD
-        win.document.write('</head>');
-        win.document.write('<body>');
-        win.document.write(minhaTabela);                   // O CONTEUDO DA TABELA DENTRO DA TAG BODY
-        win.document.write('</body></html>');
+		} else if(document.getElementById('valBruto2').innerHTML == '.'){
+			document.getElementById('valBruto2').innerHTML = valChq;
+			document.getElementById('valPrazo2').innerHTML = valPrazo;
+			document.getElementById('valJuros2').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui2').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto2').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat(document.getElementById('totPrazo').innerHTML) + parseFloat(document.getElementById('valPrazo2').innerHTML))/2).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros2').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui2').innerHTML)).toFixed(2);								
 
-        win.document.close(); 	                            // FECHA A JANELA
+		} else if(document.getElementById('valBruto3').innerHTML == '.'){
+			document.getElementById('valBruto3').innerHTML = valChq;
+			document.getElementById('valPrazo3').innerHTML = valPrazo;
+			document.getElementById('valJuros3').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui3').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto3').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*2) + parseFloat(document.getElementById('valPrazo3').innerHTML))/3).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros3').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui3').innerHTML)).toFixed(2);
 
-        win.print();                                        // IMPRIME O CONTEUDO
-    }
+		} else if(document.getElementById('valBruto4').innerHTML == '.'){
+			document.getElementById('valBruto4').innerHTML = valChq;
+			document.getElementById('valPrazo4').innerHTML = valPrazo;
+			document.getElementById('valJuros4').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui4').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto4').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*3) + parseFloat(document.getElementById('valPrazo4').innerHTML))/4).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros4').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui4').innerHTML)).toFixed(2);
+
+		} else if(document.getElementById('valBruto5').innerHTML == '.'){
+			document.getElementById('valBruto5').innerHTML = valChq;
+			document.getElementById('valPrazo5').innerHTML = valPrazo;
+			document.getElementById('valJuros5').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui5').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto5').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*4) + parseFloat(document.getElementById('valPrazo5').innerHTML))/5).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros5').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui5').innerHTML)).toFixed(2);
+
+		} else if(document.getElementById('valBruto6').innerHTML == '.'){
+			document.getElementById('valBruto6').innerHTML = valChq;
+			document.getElementById('valPrazo6').innerHTML = valPrazo;
+			document.getElementById('valJuros6').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui6').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto6').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*5) + parseFloat(document.getElementById('valPrazo6').innerHTML))/6).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros6').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui6').innerHTML)).toFixed(2);
+
+		} else if(document.getElementById('valBruto7').innerHTML == '.'){
+			document.getElementById('valBruto7').innerHTML = valChq;
+			document.getElementById('valPrazo7').innerHTML = valPrazo;
+			document.getElementById('valJuros7').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui7').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto7').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*6) + parseFloat(document.getElementById('valPrazo7').innerHTML))/7).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros7').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui7').innerHTML)).toFixed(2);
+
+		} else if(document.getElementById('valBruto8').innerHTML == '.'){
+			document.getElementById('valBruto8').innerHTML = valChq;
+			document.getElementById('valPrazo8').innerHTML = valPrazo;
+			document.getElementById('valJuros8').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui8').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto8').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*7) + parseFloat(document.getElementById('valPrazo8').innerHTML))/8).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros8').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui8').innerHTML)).toFixed(2);
+
+		} else if(document.getElementById('valBruto9').innerHTML == '.'){
+			document.getElementById('valBruto9').innerHTML = valChq;
+			document.getElementById('valPrazo9').innerHTML = valPrazo;
+			document.getElementById('valJuros9').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui9').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto9').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*8) + parseFloat(document.getElementById('valPrazo9').innerHTML))/9).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros9').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui9').innerHTML)).toFixed(2);	
+
+		} else if(document.getElementById('valBruto10').innerHTML == '.'){
+			document.getElementById('valBruto10').innerHTML = valChq;
+			document.getElementById('valPrazo10').innerHTML = valPrazo;
+			document.getElementById('valJuros10').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui10').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto10').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*9) + parseFloat(document.getElementById('valPrazo10').innerHTML))/10).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros10').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui10').innerHTML)).toFixed(2);	
+
+		} else if(document.getElementById('valBruto11').innerHTML == '.'){
+			document.getElementById('valBruto11').innerHTML = valChq;
+			document.getElementById('valPrazo11').innerHTML = valPrazo;
+			document.getElementById('valJuros11').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui11').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto11').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*10) + parseFloat(document.getElementById('valPrazo11').innerHTML))/11).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros11').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui11').innerHTML)).toFixed(2);	
+
+		} else if(document.getElementById('valBruto12').innerHTML == '.'){
+			document.getElementById('valBruto12').innerHTML = valChq;
+			document.getElementById('valPrazo12').innerHTML = valPrazo;
+			document.getElementById('valJuros12').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui12').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto12').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*11) + parseFloat(document.getElementById('valPrazo12').innerHTML))/12).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros12').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui12').innerHTML)).toFixed(2);	
+
+		} else if(document.getElementById('valBruto13').innerHTML == '.'){
+			document.getElementById('valBruto13').innerHTML = valChq;
+			document.getElementById('valPrazo13').innerHTML = valPrazo;
+			document.getElementById('valJuros13').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui13').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto13').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*12) + parseFloat(document.getElementById('valPrazo13').innerHTML))/13).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros13').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui13').innerHTML)).toFixed(2);	
+
+		} else if(document.getElementById('valBruto14').innerHTML == '.'){
+			document.getElementById('valBruto14').innerHTML = valChq;
+			document.getElementById('valPrazo14').innerHTML = valPrazo;
+			document.getElementById('valJuros14').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui14').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto14').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*13) + parseFloat(document.getElementById('valPrazo14').innerHTML))/14).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros14').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui14').innerHTML)).toFixed(2);	
+
+		} else if(document.getElementById('valBruto15').innerHTML == '.'){
+			document.getElementById('valBruto15').innerHTML = valChq;
+			document.getElementById('valPrazo15').innerHTML = valPrazo;
+			document.getElementById('valJuros15').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui15').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto15').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*14) + parseFloat(document.getElementById('valPrazo15').innerHTML))/15).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros15').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui15').innerHTML)).toFixed(2);	
+
+
+
+		} else if(document.getElementById('valBruto16').innerHTML == '.'){
+			document.getElementById('valBruto16').innerHTML = valChq;
+			document.getElementById('valPrazo16').innerHTML = valPrazo;
+			document.getElementById('valJuros16').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui16').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto16').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*15) + parseFloat(document.getElementById('valPrazo16').innerHTML))/16).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros16').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui16').innerHTML)).toFixed(2);	
+
+		} else if(document.getElementById('valBruto17').innerHTML == '.'){
+			document.getElementById('valBruto17').innerHTML = valChq;
+			document.getElementById('valPrazo17').innerHTML = valPrazo;
+			document.getElementById('valJuros17').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui17').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto17').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*16) + parseFloat(document.getElementById('valPrazo17').innerHTML))/17).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros17').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui17').innerHTML)).toFixed(2);	
+
+		} else if(document.getElementById('valBruto18').innerHTML == '.'){
+			document.getElementById('valBruto18').innerHTML = valChq;
+			document.getElementById('valPrazo18').innerHTML = valPrazo;
+			document.getElementById('valJuros18').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui18').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto18').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*17) + parseFloat(document.getElementById('valPrazo18').innerHTML))/18).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros18').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui18').innerHTML)).toFixed(2);	
+
+		} else if(document.getElementById('valBruto19').innerHTML == '.'){
+			document.getElementById('valBruto19').innerHTML = valChq;
+			document.getElementById('valPrazo19').innerHTML = valPrazo;
+			document.getElementById('valJuros19').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui19').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto19').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*18) + parseFloat(document.getElementById('valPrazo19').innerHTML))/19).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros19').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui19').innerHTML)).toFixed(2);	
+
+		} else if(document.getElementById('valBruto20').innerHTML == '.'){
+			document.getElementById('valBruto20').innerHTML = valChq;
+			document.getElementById('valPrazo20').innerHTML = valPrazo;
+			document.getElementById('valJuros20').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui20').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto20').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*19) + parseFloat(document.getElementById('valPrazo20').innerHTML))/20).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros20').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui20').innerHTML)).toFixed(2);	
+
+		} else if(document.getElementById('valBruto21').innerHTML == '.'){
+			document.getElementById('valBruto21').innerHTML = valChq;
+			document.getElementById('valPrazo21').innerHTML = valPrazo;
+			document.getElementById('valJuros21').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui21').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto21').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*20) + parseFloat(document.getElementById('valPrazo21').innerHTML))/21).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros21').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui21').innerHTML)).toFixed(2);	
+
+		} else if(document.getElementById('valBruto22').innerHTML == '.'){
+			document.getElementById('valBruto22').innerHTML = valChq;
+			document.getElementById('valPrazo22').innerHTML = valPrazo;
+			document.getElementById('valJuros22').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui22').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto22').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*21) + parseFloat(document.getElementById('valPrazo22').innerHTML))/22).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros22').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui22').innerHTML)).toFixed(2);	
+
+		} else if(document.getElementById('valBruto23').innerHTML == '.'){
+			document.getElementById('valBruto23').innerHTML = valChq;
+			document.getElementById('valPrazo23').innerHTML = valPrazo;
+			document.getElementById('valJuros23').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui23').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto23').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*22) + parseFloat(document.getElementById('valPrazo23').innerHTML))/23).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros23').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui23').innerHTML)).toFixed(2);	
+
+		} else if(document.getElementById('valBruto24').innerHTML == '.'){
+			document.getElementById('valBruto24').innerHTML = valChq;
+			document.getElementById('valPrazo24').innerHTML = valPrazo;
+			document.getElementById('valJuros24').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui24').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto24').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*23) + parseFloat(document.getElementById('valPrazo24').innerHTML))/24).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros24').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui24').innerHTML)).toFixed(2);	
+
+		} else if(document.getElementById('valBruto25').innerHTML == '.'){
+			document.getElementById('valBruto25').innerHTML = valChq;
+			document.getElementById('valPrazo25').innerHTML = valPrazo;
+			document.getElementById('valJuros25').innerHTML = valJuros.toFixed(2);
+			document.getElementById('valLiqui25').innerHTML = liquid.toFixed(2);
+			//Mostra a soma dos valores
+			document.getElementById('totBruto').innerHTML = (parseFloat(document.getElementById('totBruto').innerHTML) + parseFloat(document.getElementById('valBruto25').innerHTML)).toFixed(2);
+			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*24) + parseFloat(document.getElementById('valPrazo25').innerHTML))/25).toFixed(1);
+			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros25').innerHTML)).toFixed(2);
+			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui25').innerHTML)).toFixed(2);	
+
+		}
+	}
+	
+	function limpar(){
+		document.getElementById('valChq').value     = "";
+		document.getElementById('valTx').value      = "";
+		document.getElementById('valName').value    = "";
+		dateToday();
+		
+		document.getElementById('valBruto1').innerHTML = ".";
+		document.getElementById('valPrazo1').innerHTML = ".";
+		document.getElementById('valJuros1').innerHTML = ".";
+		document.getElementById('valLiqui1').innerHTML = ".";
+
+		document.getElementById('valBruto2').innerHTML = ".";
+		document.getElementById('valPrazo2').innerHTML = ".";
+		document.getElementById('valJuros2').innerHTML = ".";
+		document.getElementById('valLiqui2').innerHTML = ".";
+
+		document.getElementById('valBruto3').innerHTML = ".";
+		document.getElementById('valPrazo3').innerHTML = ".";
+		document.getElementById('valJuros3').innerHTML = ".";
+		document.getElementById('valLiqui3').innerHTML = ".";
+
+		document.getElementById('valBruto4').innerHTML = ".";
+		document.getElementById('valPrazo4').innerHTML = ".";
+		document.getElementById('valJuros4').innerHTML = ".";
+		document.getElementById('valLiqui4').innerHTML = ".";
+
+		document.getElementById('valBruto5').innerHTML = ".";
+		document.getElementById('valPrazo5').innerHTML = ".";
+		document.getElementById('valJuros5').innerHTML = ".";
+		document.getElementById('valLiqui5').innerHTML = ".";
+
+		document.getElementById('valBruto6').innerHTML = ".";
+		document.getElementById('valPrazo6').innerHTML = ".";
+		document.getElementById('valJuros6').innerHTML = ".";
+		document.getElementById('valLiqui6').innerHTML = ".";
+
+		document.getElementById('valBruto7').innerHTML = ".";
+		document.getElementById('valPrazo7').innerHTML = ".";
+		document.getElementById('valJuros7').innerHTML = ".";
+		document.getElementById('valLiqui7').innerHTML = ".";
+
+		document.getElementById('valBruto8').innerHTML = ".";
+		document.getElementById('valPrazo8').innerHTML = ".";
+		document.getElementById('valJuros8').innerHTML = ".";
+		document.getElementById('valLiqui8').innerHTML = ".";
+
+		document.getElementById('valBruto9').innerHTML = ".";
+		document.getElementById('valPrazo9').innerHTML = ".";
+		document.getElementById('valJuros9').innerHTML = ".";
+		document.getElementById('valLiqui9').innerHTML = ".";
+
+		document.getElementById('valBruto10').innerHTML = ".";
+		document.getElementById('valPrazo10').innerHTML = ".";
+		document.getElementById('valJuros10').innerHTML = ".";
+		document.getElementById('valLiqui10').innerHTML = ".";
+
+		document.getElementById('valBruto11').innerHTML = ".";
+		document.getElementById('valPrazo11').innerHTML = ".";
+		document.getElementById('valJuros11').innerHTML = ".";
+		document.getElementById('valLiqui11').innerHTML = ".";
+
+		document.getElementById('valBruto12').innerHTML = ".";
+		document.getElementById('valPrazo12').innerHTML = ".";
+		document.getElementById('valJuros12').innerHTML = ".";
+		document.getElementById('valLiqui12').innerHTML = ".";
+
+		document.getElementById('valBruto13').innerHTML = ".";
+		document.getElementById('valPrazo13').innerHTML = ".";
+		document.getElementById('valJuros13').innerHTML = ".";
+		document.getElementById('valLiqui13').innerHTML = ".";
+
+		document.getElementById('valBruto14').innerHTML = ".";
+		document.getElementById('valPrazo14').innerHTML = ".";
+		document.getElementById('valJuros14').innerHTML = ".";
+		document.getElementById('valLiqui14').innerHTML = ".";
+
+		document.getElementById('valBruto15').innerHTML = ".";
+		document.getElementById('valPrazo15').innerHTML = ".";
+		document.getElementById('valJuros15').innerHTML = ".";
+		document.getElementById('valLiqui15').innerHTML = ".";												
+
+		document.getElementById('valBruto16').innerHTML = ".";
+		document.getElementById('valPrazo16').innerHTML = ".";
+		document.getElementById('valJuros16').innerHTML = ".";
+		document.getElementById('valLiqui16').innerHTML = ".";												
+
+		document.getElementById('valBruto17').innerHTML = ".";
+		document.getElementById('valPrazo17').innerHTML = ".";
+		document.getElementById('valJuros17').innerHTML = ".";
+		document.getElementById('valLiqui17').innerHTML = ".";												
+
+		document.getElementById('valBruto18').innerHTML = ".";
+		document.getElementById('valPrazo18').innerHTML = ".";
+		document.getElementById('valJuros18').innerHTML = ".";
+		document.getElementById('valLiqui18').innerHTML = ".";												
+
+		document.getElementById('valBruto19').innerHTML = ".";
+		document.getElementById('valPrazo19').innerHTML = ".";
+		document.getElementById('valJuros19').innerHTML = ".";
+		document.getElementById('valLiqui19').innerHTML = ".";												
+
+		document.getElementById('valBruto20').innerHTML = ".";
+		document.getElementById('valPrazo20').innerHTML = ".";
+		document.getElementById('valJuros20').innerHTML = ".";
+		document.getElementById('valLiqui20').innerHTML = ".";												
+
+		document.getElementById('valBruto21').innerHTML = ".";
+		document.getElementById('valPrazo21').innerHTML = ".";
+		document.getElementById('valJuros21').innerHTML = ".";
+		document.getElementById('valLiqui21').innerHTML = ".";												
+
+		document.getElementById('valBruto22').innerHTML = ".";
+		document.getElementById('valPrazo22').innerHTML = ".";
+		document.getElementById('valJuros22').innerHTML = ".";
+		document.getElementById('valLiqui22').innerHTML = ".";												
+
+		document.getElementById('valBruto23').innerHTML = ".";
+		document.getElementById('valPrazo23').innerHTML = ".";
+		document.getElementById('valJuros23').innerHTML = ".";
+		document.getElementById('valLiqui23').innerHTML = ".";												
+
+		document.getElementById('valBruto24').innerHTML = ".";
+		document.getElementById('valPrazo24').innerHTML = ".";
+		document.getElementById('valJuros24').innerHTML = ".";
+		document.getElementById('valLiqui24').innerHTML = ".";												
+
+		document.getElementById('valBruto25').innerHTML = ".";
+		document.getElementById('valPrazo25').innerHTML = ".";
+		document.getElementById('valJuros25').innerHTML = ".";
+		document.getElementById('valLiqui25').innerHTML = ".";																					
+										
+		document.getElementById('totBruto').innerHTML = ".";
+		document.getElementById('totPrazo').innerHTML = ".";
+		document.getElementById('totJuros').innerHTML = ".";
+		document.getElementById('totLiqui').innerHTML = ".";		
+	}
+
+	function dateToday(dBase = new Date()){
+		var dia = dBase.getDate();
+		var mes = dBase.getMonth()+1;
+		var ano = dBase.getFullYear();
+
+		if (dia.toString().length == 1){
+			dia = '0' + dia;
+		}
+		if (mes.toString().length == 1){
+			mes = '0' + mes;
+		}		
+
+		//return ano + '-' + mes + '-' + ano;
+		var diaAtual = ano + '-' + mes + '-' + dia;
+		
+		document.getElementById('dtBase').value = diaAtual;
+		document.getElementById('dtVenc').value = diaAtual;
+	}
+
+	function difDates(){
+		var base = document.getElementById('dtBase').value;
+		var venc = document.getElementById('dtVenc').value;
+		base = new Date(base);
+		venc = new Date(venc);
+		var dif = Math.abs(base.getTime() - venc.getTime());
+		var totDias = Math.ceil(dif / (1000 * 60 * 60 * 24));
+
+		return totDias;
+	}
+
+	/*function checkNumber(num){         Função para checar se foi digitado somente núm.
+		if (num.match(/^[0-9]+$/)){
+		} else {
+			alert('Digite Somente Números(Sem Ponto/Vírgula).');
+		}
+	} */
 </script>
 </html>
