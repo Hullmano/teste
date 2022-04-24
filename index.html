@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login</title>
+	<link rel="stylesheet" type="text/css" href="css/login.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+ 	<div class="wrap">
+	 	<label for="login">Usuário:</label><br>
+	 	<input type="text" name="login" id="login"><br>
+	 	<label for="senha">Senha:</label><br>
+	 	<input type="password" name="senha" id="senha"><br>
+	 	<!-- <input type="submit" name="Ok" value="Ok"> -->
+	 	<a href="calc.html" onclick="setSession()">
+			<button id="btnLogin">Login</button>
+		</a>
+	</div>
+</body>
+
+<script type="text/javascript">
+	
+	function setSession(){
+		var login = document.getElementById('login').value;
+		var senha = document.getElementById('senha').value;
+		sessionStorage.setItem('user', login);
+		sessionStorage.setItem('psw', senha);
+		//alert(sessionStorage.getItem('user'));
+	}
+
+</script>
+</html>
