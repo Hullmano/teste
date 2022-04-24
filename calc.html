@@ -334,6 +334,19 @@
 
 		return totDias;
 	}
+	
+	//Checa se usuário logou.
+	var vUser = sessionStorage.getItem('user');
+	var vPsw  = sessionStorage.getItem('psw');
+	if (vUser == 'User){ 
+		if (vPsw != '0000') {
+			alert('Senha Incorreta!')
+			window.location = 'index.html'
+		}
+	} else {
+		alert('Usuário Incorreto!')
+		window.location = 'index.html';
+	}
 
 	/*function checkNumber(num){         Função para checar se foi digitado somente núm.
 		if (num.match(/^[0-9]+$/)){
