@@ -1,0 +1,36 @@
+@media screen and (min-width: 340px) and (max-width: 568px)
+{
+     .wrap{width:100%;}
+     .wrap{margin:0;}
+     .wrap{padding:0;}
+     .wrap input[type=text]{width: 100%;}
+     .wrap input[type=text]{font-size: 16px;}
+     .wrap input[type=password]{width: 100%;}
+     .wrap input[type=password]{font-size: 16px;}
+     .wrap input[type=submit]{margin: 5px 0 0 0;} */
+     .wrap{font-size:19px;}
+
+}
+
+.wrap{
+    width: 330px;
+    height: 100%;
+    margin: auto;
+    padding: 0;
+    line-height: 1.5;
+}
+
+.wrap input[type=text]{
+    font-size: 16px;
+}
+
+.wrap input[type=password]{
+    font-size: 16px;
+}
+
+#btnLogin{
+	width: 103px;
+	font-size: 16px;
+	font-weight: bold;
+	margin: 5px 0 0 0;
+}
