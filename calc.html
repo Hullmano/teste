@@ -9,7 +9,8 @@
 </head>
 <body onload="dateToday()">
 	<div class="wrap">
-	<!--	<h3>Auto - Relevo Confeccões</h3> -->
+		<h3>Nome Usuário/Empresa</h3>
+		<h4>Contato:(XX)XXXXX-XXXX </h4>
 	<!--	<h4>Cnpj: 03.950.387/0001-35</h4> -->
 		<div class="linha">
 			<label for="valChq">Informe o Valor do Cheque:</label>
@@ -52,43 +53,43 @@
 			<label class="col col3" id="valPrazo3">.</label>
 			<label class="col col4" id="valJuros3">.</label>
 			<label class="col col5" id="valLiqui3">.</label>
-			<!--4º Linha-->
+			<!--4º Linha->
 			<label class="col col1">04</label>
 			<label class="col col2" id="valBruto4">.</label>
 			<label class="col col3" id="valPrazo4">.</label>
 			<label class="col col4" id="valJuros4">.</label>
 			<label class="col col5" id="valLiqui4">.</label>
-			<!--5º Linha-->
+			<!-5º Linha->
 			<label class="col col1">05</label>
 			<label class="col col2" id="valBruto5">.</label>
 			<label class="col col3" id="valPrazo5">.</label>
 			<label class="col col4" id="valJuros5">.</label>
 			<label class="col col5" id="valLiqui5">.</label>
-			<!--6º Linha-->
+			<!-6º Linha->
 			<label class="col col1">06</label>
 			<label class="col col2" id="valBruto6">.</label>
 			<label class="col col3" id="valPrazo6">.</label>
 			<label class="col col4" id="valJuros6">.</label>
 			<label class="col col5" id="valLiqui6">.</label>
-			<!--7º Linha-->
+			<!-7º Linha->
 			<label class="col col1">07</label>
 			<label class="col col2" id="valBruto7">.</label>
 			<label class="col col3" id="valPrazo7">.</label>
 			<label class="col col4" id="valJuros7">.</label>
 			<label class="col col5" id="valLiqui7">.</label>
-			<!--8º Linha-->
+			<!-8º Linha->
 			<label class="col col1">08</label>
 			<label class="col col2" id="valBruto8">.</label>
 			<label class="col col3" id="valPrazo8">.</label>
 			<label class="col col4" id="valJuros8">.</label>
 			<label class="col col5" id="valLiqui8">.</label>
-			<!--9º Linha-->
+			<!-9º Linha->
 			<label class="col col1">09</label>
 			<label class="col col2" id="valBruto9">.</label>
 			<label class="col col3" id="valPrazo9">.</label>
 			<label class="col col4" id="valJuros9">.</label>
 			<label class="col col5" id="valLiqui9">.</label>
-			<!--10º Linha-->
+			<!-10º Linha->
 			<label class="col col1">10</label>
 			<label class="col col2" id="valBruto10">.</label>
 			<label class="col col3" id="valPrazo10">.</label>
@@ -161,7 +162,7 @@
 			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*2) + parseFloat(document.getElementById('valPrazo3').innerHTML))/3).toFixed(1);
 			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros3').innerHTML)).toFixed(2);
 			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui3').innerHTML)).toFixed(2);
-
+/*
 		} else if(document.getElementById('valBruto4').innerHTML == '.'){
 			document.getElementById('valBruto4').innerHTML = valChq;
 			document.getElementById('valPrazo4').innerHTML = valPrazo;
@@ -238,6 +239,7 @@
 			document.getElementById('totPrazo').innerHTML = ((parseFloat((document.getElementById('totPrazo').innerHTML)*9) + parseFloat(document.getElementById('valPrazo10').innerHTML))/10).toFixed(1);
 			document.getElementById('totJuros').innerHTML = (parseFloat(document.getElementById('totJuros').innerHTML) + parseFloat(document.getElementById('valJuros10').innerHTML)).toFixed(2);
 			document.getElementById('totLiqui').innerHTML = (parseFloat(document.getElementById('totLiqui').innerHTML) + parseFloat(document.getElementById('valLiqui10').innerHTML)).toFixed(2);	
+*/		
 		}
 
 	}
@@ -258,7 +260,7 @@
 		document.getElementById('valJuros2').innerHTML = ".";
 		document.getElementById('valLiqui2').innerHTML = ".";
 
-		document.getElementById('valBruto3').innerHTML = ".";
+/*		document.getElementById('valBruto3').innerHTML = ".";
 		document.getElementById('valPrazo3').innerHTML = ".";
 		document.getElementById('valJuros3').innerHTML = ".";
 		document.getElementById('valLiqui3').innerHTML = ".";
@@ -297,7 +299,7 @@
 		document.getElementById('valPrazo10').innerHTML = ".";
 		document.getElementById('valJuros10').innerHTML = ".";
 		document.getElementById('valLiqui10').innerHTML = ".";
-																		
+*/																		
 										
 		document.getElementById('totBruto').innerHTML = ".";
 		document.getElementById('totPrazo').innerHTML = ".";
